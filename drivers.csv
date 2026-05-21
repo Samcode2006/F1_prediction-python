@@ -1,21 +1,23 @@
 Driver,Team,Qualifying,PreviousFinish
-Norris,McLaren,1,1
-Piastri,McLaren,2,9
-Verstappen,Red Bull Racing,3,2
-Russell,Mercedes,4,3
-Tsunoda,Racing Bulls,5,12
-Albon,Williams,6,5
-Leclerc,Ferrari,7,8
-Hamilton,Ferrari,8,10
-Gasly,Alpine,9,11
-Sainz,Williams,10,20
-Hadjar,Racing Bulls,11,20
-Alonso,Aston Martin,12,20
-Stroll,Aston Martin,13,6
-Doohan,Alpine,14,20
-Bortoleto,Kick Sauber,15,20
-Antonelli,Mercedes,16,4
-Hulkenberg,Kick Sauber,17,7
-Lawson,Red Bull Racing,18,20
-Ocon,Haas F1 Team,19,13
-Bearman,Haas F1 Team,20,14
+Antonelli,Mercedes,1,1
+Verstappen,Red Bull Racing,2,5
+Leclerc,Ferrari,3,8
+Norris,McLaren,4,2
+Russell,Mercedes,5,4
+Hamilton,Ferrari,6,6
+Piastri,McLaren,7,3
+Colapinto,Alpine,8,7
+Gasly,Alpine,9,20
+Hulkenberg,Audi,10,20
+Lawson,Racing Bulls,11,20
+Bearman,Haas F1 Team,12,11
+Sainz,Williams,13,9
+Ocon,Haas F1 Team,14,13
+Albon,Williams,15,10
+Lindblad,Racing Bulls,16,14
+Alonso,Aston Martin,17,15
+Stroll,Aston Martin,18,17
+Bottas,Cadillac,19,18
+Perez,Cadillac,20,16
+Bortoleto,Audi,21,12
+Hadjar,Red Bull Racing,22,20
