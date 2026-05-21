@@ -75,13 +75,11 @@ Hamilton,Mercedes,4,3
 
 ## 💡 Features
 
-- ✅ Menu-driven terminal interface
 - ✅ Real data integration using **FastF1 API**
 - ✅ Interactive web dashboard using **Streamlit**
 - ✅ Full driver rankings table
 - ✅ Score breakdown per driver
 - ✅ Modular code (split across files)
-- ✅ Clean comments throughout
 
 ---
 
