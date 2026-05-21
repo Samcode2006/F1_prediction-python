@@ -10,7 +10,6 @@ venv.bak/
 __pycache__/
 *.py[cod]
 *$py.class
-cache/
 
 # Streamlit specific
 .streamlit/
