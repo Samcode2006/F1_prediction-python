@@ -17,7 +17,7 @@ st.set_page_config(
 )
 
 # ──────────────────────────────────────────────
-# LOAD DATA (cached so it doesn't reload on every interaction)
+# LOAD DATA
 # ──────────────────────────────────────────────
 
 def get_drivers():
@@ -28,45 +28,14 @@ def get_drivers():
     except FileNotFoundError:
         return None  # Handle error outside the cached function
 
-
-# ──────────────────────────────────────────────
-# SIDEBAR — Live input editor
-# ──────────────────────────────────────────────
-
-st.sidebar.title("⚙️ Adjust Inputs")
-st.sidebar.markdown("Tweak values below to see how predictions change.")
-
 base_drivers = get_drivers()
 
 if base_drivers is None:
     st.error("❌ `drivers.csv` not found. Make sure it's in the same folder as `app.py`.")
     st.stop()  # Halt the app cleanly — nothing below runs
 
-# Let the user override qualifying positions in the sidebar
-edited_drivers = []
-for driver in base_drivers:
-    with st.sidebar.expander(driver["Driver"]):
-        new_qual = st.slider(
-            "Qualifying Position",
-            min_value=1, max_value=20,
-            value=driver["Qualifying"],
-            key=f"qual_{driver['Driver']}"
-        )
-        new_prev = st.slider(
-            "Previous Finish",
-            min_value=1, max_value=20,
-            value=driver["PreviousFinish"],
-            key=f"prev_{driver['Driver']}"
-        )
-        # Build updated driver dict with user's overrides
-        edited_drivers.append({
-            **driver,
-            "Qualifying":     new_qual,
-            "PreviousFinish": new_prev,
-        })
-
-# Recalculate predictions with (potentially edited) values
-ranked_drivers = predict_winner(edited_drivers)
+# Calculate predictions with actual values
+ranked_drivers = predict_winner(base_drivers)
 
 # ──────────────────────────────────────────────
 # HEADER
