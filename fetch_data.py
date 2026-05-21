@@ -38,7 +38,7 @@ def fetch_qualifying_positions(season, race):
     """
     print(f"  Fetching qualifying data: {season} {race}...")
     session = fastf1.get_session(season, race, 'Q')
-    session.load(telemetry=False, weather=False, messages=False)
+    session.load(telemetry=False, weather=True, messages=False)
 
     positions = {}
     for _, row in session.results.iterrows():
@@ -57,7 +57,7 @@ def fetch_race_results(season, race):
     """
     print(f"  Fetching race result data: {season} {race}...")
     session = fastf1.get_session(season, race, 'R')
-    session.load(telemetry=False, weather=False, messages=False)
+    session.load(telemetry=False, weather=True, messages=False)
 
     results = {}
     teams   = {}

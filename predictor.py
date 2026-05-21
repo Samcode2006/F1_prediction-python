@@ -223,20 +223,8 @@ def calculate_constructor_standings(ranked_drivers: list[dict]) -> list[dict]:
 def load_weather_data(cache_dir: str, track_folder_name: str) -> dict | None:
     """
     Loads weather data from a cached FastF1 Race session.
-
-    Searches for the Race session subfolder within the track folder,
-    loads the session_info.ff1pkl pickle file, and extracts weather fields.
-
-    Parameters:
-        cache_dir (str): Path to the cache directory (e.g., "cache")
-        track_folder_name (str): Raw track folder name (e.g., "2024-03-02_Bahrain_Grand_Prix")
-
-    Returns:
-        dict | None: Dict with weather metrics (air_temp, track_temp, rainfall,
-                     and optionally humidity, wind_speed), or None if unavailable.
     """
     try:
-        # Find the track folder across year directories
         track_path = None
         if os.path.isdir(cache_dir):
             for year_folder in os.listdir(cache_dir):
@@ -262,69 +250,33 @@ def load_weather_data(cache_dir: str, track_folder_name: str) -> dict | None:
         if race_folder is None:
             return None
 
-        # Load the session_info.ff1pkl pickle file
-        session_file = os.path.join(race_folder, "session_info.ff1pkl")
+        # Load the weather_data.ff1pkl pickle file
+        session_file = os.path.join(race_folder, "weather_data.ff1pkl")
         if not os.path.isfile(session_file):
             return None
 
         with open(session_file, "rb") as f:
             session_data = pickle.load(f)
 
-        # Extract weather fields from the session data
-        # The data may be nested under a 'data' key or at the top level
-        data = session_data.get("data", session_data) if isinstance(session_data, dict) else None
-        if data is None:
+        data = session_data.get("data", {})
+        if not isinstance(data, dict):
             return None
 
-        # Look for weather data - it may be in a 'Weather' key or as direct fields
-        weather_source = None
-        if isinstance(data, dict):
-            if "Weather" in data:
-                weather_source = data["Weather"]
-            elif "air_temp" in data or "AirTemp" in data:
-                weather_source = data
+        import math
+        def get_avg(lst):
+            if not lst: return "N/A"
+            clean = [x for x in lst if x is not None and not math.isnan(x)]
+            if not clean: return "N/A"
+            return round(sum(clean) / len(clean), 1)
 
-        if weather_source is None:
-            return None
-
-        # Extract required fields (try both naming conventions)
-        air_temp = weather_source.get("air_temp")
-        if air_temp is None:
-            air_temp = weather_source.get("AirTemp")
-
-        track_temp = weather_source.get("track_temp")
-        if track_temp is None:
-            track_temp = weather_source.get("TrackTemp")
-
-        rainfall = weather_source.get("rainfall")
-        if rainfall is None:
-            rainfall = weather_source.get("Rainfall")
-
-        # All required fields must be present
-        if air_temp is None or track_temp is None or rainfall is None:
-            return None
-
-        result = {
-            "air_temp": float(air_temp),
-            "track_temp": float(track_temp),
-            "rainfall": bool(rainfall),
+        return {
+            'air_temp': get_avg(data.get("AirTemp")),
+            'track_temp': get_avg(data.get("TrackTemp")),
+            'rainfall': any([x == 1 for x in data.get("Rainfall") if x is not None]) if "Rainfall" in data else False,
+            'humidity': get_avg(data.get("Humidity")),
+            'wind_speed': get_avg(data.get("WindSpeed"))
         }
 
-        # Add optional fields if available
-        humidity = weather_source.get("humidity")
-        if humidity is None:
-            humidity = weather_source.get("Humidity")
-        if humidity is not None:
-            result["humidity"] = float(humidity)
-
-        wind_speed = weather_source.get("wind_speed")
-        if wind_speed is None:
-            wind_speed = weather_source.get("WindSpeed")
-        if wind_speed is not None:
-            result["wind_speed"] = float(wind_speed)
-
-        return result
-
-    except (OSError, pickle.UnpicklingError, EOFError, ValueError, TypeError, KeyError):
-        # Return None if file is corrupted, unreadable, or data is malformed
+    except Exception as e:
+        print(f"Error loading weather data: {e}")
         return None
