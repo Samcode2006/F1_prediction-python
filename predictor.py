@@ -9,14 +9,14 @@ import csv
 # Higher = stronger constructor
 # ──────────────────────────────────────────────
 TEAM_STRENGTH = {
-    "Red Bull":      10,
+    "Red Bull Racing": 10,
     "McLaren":        9,
     "Ferrari":        8,
     "Mercedes":       7,
     "Aston Martin":   5,
     "Alpine":         4,
     "Williams":       4,
-    "Haas":           3,
+    "Haas F1 Team":   3,
     "Kick Sauber":    3,
     "RB":             3,
 }
