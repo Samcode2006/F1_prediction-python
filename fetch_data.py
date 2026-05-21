@@ -5,12 +5,10 @@
 
 import fastf1
 import pandas as pd
+import datetime
 
 # ── CONFIG — change these to fetch different races ──
 SEASON       = 2026
-QUALI_RACE   = 'Australia' # First race of 2026 season
-PREV_RACE    = 'Australia' # race to get previous finish from
-                            # (set to a different round for more realistic data)
 CACHE_DIR    = 'cache'     # FastF1 caches data here to avoid re-downloading
 OUTPUT_CSV   = 'drivers.csv'
 
@@ -19,6 +17,19 @@ OUTPUT_CSV   = 'drivers.csv'
 import os
 os.makedirs(CACHE_DIR, exist_ok=True)
 fastf1.Cache.enable_cache(CACHE_DIR)
+
+def get_latest_race(season):
+    """Gets the most recently completed race for the given season"""
+    schedule = fastf1.get_event_schedule(season)
+    now = pd.Timestamp(datetime.datetime.now())
+    # Exclude Pre-Season testing (RoundNumber == 0)
+    past_races = schedule[(schedule['EventDate'] < now) & (schedule['RoundNumber'] > 0)]
+    
+    if past_races.empty:
+        return 'Australia' # Fallback
+    
+    latest_race = past_races.iloc[-1]
+    return latest_race['EventName']
 
 def fetch_qualifying_positions(season, race):
     """
@@ -88,9 +99,12 @@ def main():
     print("=" * 50)
     print("  F1 Data Fetcher — powered by FastF1")
     print("=" * 50)
+    
+    latest_race = get_latest_race(SEASON)
+    print(f"\n  Auto-detected latest race: {latest_race}\n")
 
-    quali   = fetch_qualifying_positions(SEASON, QUALI_RACE)
-    results, teams = fetch_race_results(SEASON, PREV_RACE)
+    quali   = fetch_qualifying_positions(SEASON, latest_race)
+    results, teams = fetch_race_results(SEASON, latest_race)
     build_csv(quali, results, teams)
 
     print("\n  Run main.py or app.py to see predictions.")
