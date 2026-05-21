@@ -3,6 +3,9 @@
 # Contains: load_drivers(), calculate_score(), predict_winner()
 
 import csv
+import os
+import pickle
+import os
 
 # ──────────────────────────────────────────────
 # TEAM STRENGTH RATINGS (out of 10)
@@ -96,6 +99,23 @@ def calculate_score(driver):
     return score
 
 
+def calculate_podium_chance(score: float) -> float:
+    """
+    Calculates the podium chance percentage for a driver based on their
+    prediction score.
+
+    Formula: round((score / 35) * 100, 1), clamped between 0.0 and 100.0.
+
+    Parameters:
+        score (float): A driver's prediction score (typically 0–35)
+
+    Returns:
+        float: Percentage chance rounded to 1 decimal place (0.0–100.0)
+    """
+    chance = round((score / 35) * 100, 1)
+    return max(0.0, min(100.0, chance))
+
+
 def predict_winner(drivers):
     """
     Calculates scores for all drivers and returns them sorted
@@ -115,3 +135,196 @@ def predict_winner(drivers):
     ranked = sorted(drivers, key=lambda d: d["Score"], reverse=True)
 
     return ranked
+
+
+def discover_tracks(cache_dir: str = "cache") -> list[str]:
+    """
+    Scans the cache folder structure to find available tracks.
+
+    Iterates year folders in the cache directory, then subdirectories
+    within each year. Extracts track names by removing the YYYY-MM-DD_
+    date prefix (first 11 characters) and replacing underscores with spaces.
+
+    Parameters:
+        cache_dir (str): path to the cache directory (default: "cache")
+
+    Returns:
+        list[str]: alphabetically sorted list of unique track names,
+                   or empty list if cache folder is missing or empty
+    """
+    if not os.path.isdir(cache_dir):
+        return []
+
+    track_names = set()
+
+    for year_folder in os.listdir(cache_dir):
+        year_path = os.path.join(cache_dir, year_folder)
+        if not os.path.isdir(year_path):
+            continue
+
+        for track_folder in os.listdir(year_path):
+            track_path = os.path.join(year_path, track_folder)
+            if not os.path.isdir(track_path):
+                continue
+
+            # Remove the YYYY-MM-DD_ prefix (first 11 characters)
+            raw_name = track_folder[11:]
+            # Replace underscores with spaces
+            track_name = raw_name.replace("_", " ")
+            track_names.add(track_name)
+
+    return sorted(track_names)
+
+
+def calculate_constructor_standings(ranked_drivers: list[dict]) -> list[dict]:
+    """
+    Aggregates driver scores by team and returns sorted constructor standings.
+
+    For each team, computes:
+        - ConstructorScore: sum of all driver Scores for that team
+        - DriverCount: number of drivers belonging to that team
+        - TeamStrength: rating from TEAM_STRENGTH dict (default 3 for unknown teams)
+
+    Sorting:
+        - Primary: ConstructorScore descending (highest first)
+        - Secondary (tie-breaker): team name alphabetically ascending
+
+    Parameters:
+        ranked_drivers (list of dict): list of driver dicts, each with 'Team' and 'Score' keys
+
+    Returns:
+        list of dict: constructor standings sorted by score descending, ties alphabetical
+    """
+    # Aggregate scores and driver counts by team
+    teams: dict[str, dict] = {}
+    for driver in ranked_drivers:
+        team_name = driver["Team"]
+        if team_name not in teams:
+            teams[team_name] = {"ConstructorScore": 0.0, "DriverCount": 0}
+        teams[team_name]["ConstructorScore"] += driver["Score"]
+        teams[team_name]["DriverCount"] += 1
+
+    # Build the standings list
+    standings = []
+    for team_name, data in teams.items():
+        standings.append({
+            "Team": team_name,
+            "ConstructorScore": data["ConstructorScore"],
+            "TeamStrength": TEAM_STRENGTH.get(team_name, 3),
+            "DriverCount": data["DriverCount"],
+        })
+
+    # Sort: descending by ConstructorScore, ties broken alphabetically by team name
+    standings.sort(key=lambda x: (-x["ConstructorScore"], x["Team"]))
+
+    return standings
+
+
+def load_weather_data(cache_dir: str, track_folder_name: str) -> dict | None:
+    """
+    Loads weather data from a cached FastF1 Race session.
+
+    Searches for the Race session subfolder within the track folder,
+    loads the session_info.ff1pkl pickle file, and extracts weather fields.
+
+    Parameters:
+        cache_dir (str): Path to the cache directory (e.g., "cache")
+        track_folder_name (str): Raw track folder name (e.g., "2024-03-02_Bahrain_Grand_Prix")
+
+    Returns:
+        dict | None: Dict with weather metrics (air_temp, track_temp, rainfall,
+                     and optionally humidity, wind_speed), or None if unavailable.
+    """
+    try:
+        # Find the track folder across year directories
+        track_path = None
+        if os.path.isdir(cache_dir):
+            for year_folder in os.listdir(cache_dir):
+                year_path = os.path.join(cache_dir, year_folder)
+                if not os.path.isdir(year_path):
+                    continue
+                candidate = os.path.join(year_path, track_folder_name)
+                if os.path.isdir(candidate):
+                    track_path = candidate
+                    break
+
+        if track_path is None:
+            return None
+
+        # Find the Race session subfolder (ends with _Race)
+        race_folder = None
+        for subfolder in os.listdir(track_path):
+            subfolder_path = os.path.join(track_path, subfolder)
+            if os.path.isdir(subfolder_path) and subfolder.endswith("_Race"):
+                race_folder = subfolder_path
+                break
+
+        if race_folder is None:
+            return None
+
+        # Load the session_info.ff1pkl pickle file
+        session_file = os.path.join(race_folder, "session_info.ff1pkl")
+        if not os.path.isfile(session_file):
+            return None
+
+        with open(session_file, "rb") as f:
+            session_data = pickle.load(f)
+
+        # Extract weather fields from the session data
+        # The data may be nested under a 'data' key or at the top level
+        data = session_data.get("data", session_data) if isinstance(session_data, dict) else None
+        if data is None:
+            return None
+
+        # Look for weather data - it may be in a 'Weather' key or as direct fields
+        weather_source = None
+        if isinstance(data, dict):
+            if "Weather" in data:
+                weather_source = data["Weather"]
+            elif "air_temp" in data or "AirTemp" in data:
+                weather_source = data
+
+        if weather_source is None:
+            return None
+
+        # Extract required fields (try both naming conventions)
+        air_temp = weather_source.get("air_temp")
+        if air_temp is None:
+            air_temp = weather_source.get("AirTemp")
+
+        track_temp = weather_source.get("track_temp")
+        if track_temp is None:
+            track_temp = weather_source.get("TrackTemp")
+
+        rainfall = weather_source.get("rainfall")
+        if rainfall is None:
+            rainfall = weather_source.get("Rainfall")
+
+        # All required fields must be present
+        if air_temp is None or track_temp is None or rainfall is None:
+            return None
+
+        result = {
+            "air_temp": float(air_temp),
+            "track_temp": float(track_temp),
+            "rainfall": bool(rainfall),
+        }
+
+        # Add optional fields if available
+        humidity = weather_source.get("humidity")
+        if humidity is None:
+            humidity = weather_source.get("Humidity")
+        if humidity is not None:
+            result["humidity"] = float(humidity)
+
+        wind_speed = weather_source.get("wind_speed")
+        if wind_speed is None:
+            wind_speed = weather_source.get("WindSpeed")
+        if wind_speed is not None:
+            result["wind_speed"] = float(wind_speed)
+
+        return result
+
+    except (OSError, pickle.UnpicklingError, EOFError, ValueError, TypeError, KeyError):
+        # Return None if file is corrupted, unreadable, or data is malformed
+        return None
