@@ -7,9 +7,9 @@ import fastf1
 import pandas as pd
 
 # ── CONFIG — change these to fetch different races ──
-SEASON       = 2024
-QUALI_RACE   = 'Bahrain'   # race to get qualifying grid from
-PREV_RACE    = 'Bahrain'   # race to get previous finish from
+SEASON       = 2025
+QUALI_RACE   = 'Australia' # First race of 2025 season
+PREV_RACE    = 'Australia' # race to get previous finish from
                             # (set to a different round for more realistic data)
 CACHE_DIR    = 'cache'     # FastF1 caches data here to avoid re-downloading
 OUTPUT_CSV   = 'drivers.csv'
