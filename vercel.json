@@ -16,23 +16,23 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "api/index.py"
+      "dest": "/api/index.py"
     },
     {
       "src": "/assets/(.*)",
-      "dest": "frontend/dist/assets/$1"
+      "dest": "/frontend/assets/$1"
     },
     {
       "src": "/favicon.jpeg",
-      "dest": "frontend/dist/favicon.jpeg"
+      "dest": "/frontend/favicon.jpeg"
     },
     {
       "src": "/vite.svg",
-      "dest": "frontend/dist/vite.svg"
+      "dest": "/frontend/vite.svg"
     },
     {
       "src": "/(.*)",
-      "dest": "frontend/dist/index.html"
+      "dest": "/frontend/index.html"
     }
   ]
 }
