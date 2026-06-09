@@ -2,7 +2,7 @@
 # F1 Race Winner Prediction System
 # Entry point — runs the program and displays results
 
-from predictor import load_drivers, predict_winner
+from predictor import load_drivers, predict_winner, TEAM_STRENGTH, get_score_breakdown
 
 # ──────────────────────────────────────────────
 # DISPLAY HELPERS
@@ -76,21 +76,19 @@ def show_score_breakdown(ranked_drivers):
     print("-" * 55)
 
     for driver in ranked_drivers:
-        qual_pts   = max(0, 11 - driver["Qualifying"])
-        finish_pts = max(0, 11 - driver["PreviousFinish"])
-        podium_pts = 5 if driver["PreviousFinish"] <= 3 else 0
-
-        # Import TEAM_STRENGTH to show team score
-        from predictor import TEAM_STRENGTH
-        team_pts = TEAM_STRENGTH.get(driver["Team"], 3)
+        breakdown = get_score_breakdown(driver)
 
         print(f"\n  {driver['Driver']} ({driver['Team']})")
-        print(f"    Qualifying bonus  : {qual_pts}")
-        print(f"    Prev finish bonus : {finish_pts}")
-        print(f"    Podium form bonus : {podium_pts}")
-        print(f"    Team strength     : {team_pts}")
+        print(f"    Qualifying bonus    : {breakdown['Qualifying Bonus']}")
+        print(f"    Form bonus          : {breakdown['Form Bonus']}")
+        print(f"    Podium form bonus   : {breakdown['Podium Bonus']}")
+        print(f"    Team strength       : {breakdown['Team Strength']}")
+        print(f"    Grid penalty        : {breakdown['Grid Penalty']}")
+        print(f"    Tyre bonus          : {breakdown['Tyre Bonus']}")
+        print(f"    Wet weather bonus   : {breakdown['Wet Weather Bonus']}")
+        print(f"    Championship bonus  : {breakdown['Championship Bonus']}")
         print(f"    ─────────────────────")
-        print(f"    TOTAL SCORE       : {driver['Score']}")
+        print(f"    TOTAL SCORE         : {driver['Score']}")
 
 
 # ──────────────────────────────────────────────

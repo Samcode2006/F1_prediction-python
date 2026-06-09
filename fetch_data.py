@@ -3,27 +3,30 @@
 # Usage: python fetch_data.py
 # Run this before main.py or app.py to refresh the data
 
+import datetime
+import os
+
 import fastf1
 import pandas as pd
-import datetime
 
 # ── CONFIG — change these to fetch different races ──
-SEASON       = 2026
-CACHE_DIR    = 'cache'     # FastF1 caches data here to avoid re-downloading
-OUTPUT_CSV   = 'drivers.csv'
+SEASON    = 2026
+CACHE_DIR = 'cache'      # FastF1 caches data here to avoid re-downloading
+OUTPUT_CSV = 'drivers.csv'
 
-# Enable caching — highly recommended, avoids hammering the API
-# Enable caching — create the folder first if it doesn't exist
-import os
+# Create cache folder if missing, then enable FastF1 caching
 os.makedirs(CACHE_DIR, exist_ok=True)
 fastf1.Cache.enable_cache(CACHE_DIR)
 
 def get_latest_race(season):
-    """Gets the most recently completed race for the given season"""
+    """Gets the most recently completed race for the given season."""
     schedule = fastf1.get_event_schedule(season)
-    now = pd.Timestamp(datetime.datetime.now())
+    # Use UTC-aware timestamp; compare to EventDate + 1 day so we don't
+    # accidentally include a race that is still happening today.
+    now = pd.Timestamp(datetime.datetime.now(tz=datetime.timezone.utc))
+    event_end = schedule['EventDate'] + pd.Timedelta(days=1)
     # Exclude Pre-Season testing (RoundNumber == 0)
-    past_races = schedule[(schedule['EventDate'] < now) & (schedule['RoundNumber'] > 0)]
+    past_races = schedule[(event_end < now) & (schedule['RoundNumber'] > 0)]
     
     if past_races.empty:
         return 'Australia' # Fallback

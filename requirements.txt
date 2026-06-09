@@ -1,4 +1,10 @@
-streamlit
+fastf1
 pandas
+streamlit
 hypothesis
 pytest
+scikit-learn
+fastapi
+uvicorn[standard]
+python-multipart
+httpx
