@@ -1,0 +1,122 @@
+.podium-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: var(--sp-xl) var(--sp-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--sp-sm);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+
+  /* Start hidden for animation */
+  opacity: 0;
+  transform: translateY(20px) scale(0.97);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color var(--t-normal),
+    box-shadow var(--t-normal);
+}
+
+.podium-card--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Accent glow on hover */
+.podium-card--gold   { --glow: rgba(245,197,24,0.2); }
+.podium-card--silver { --glow: rgba(192,197,204,0.15); }
+.podium-card--bronze { --glow: rgba(205,127,50,0.15); }
+
+.podium-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-card), 0 0 32px var(--glow);
+  transform: translateY(-4px) scale(1.01);
+}
+
+/* Top gradient shimmer */
+.podium-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+}
+
+.podium-card--gold::before   { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.podium-card--silver::before { background: linear-gradient(90deg, transparent, var(--silver), transparent); }
+.podium-card--bronze::before { background: linear-gradient(90deg, transparent, var(--bronze), transparent); }
+
+/* Team colour bar */
+.podium-card__team-bar {
+  width: 48px;
+  height: 4px;
+  border-radius: var(--r-full);
+  background: var(--team-color, #888);
+  margin: var(--sp-xs) 0;
+}
+
+.podium-card__medal {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: var(--sp-xs);
+}
+
+.podium-card__label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.podium-card__driver {
+  font-family: var(--font-head);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.podium-card__team {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.podium-card__score {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-top: var(--sp-sm);
+}
+
+.podium-card__score-value {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.podium-card--gold   .podium-card__score-value { color: var(--gold); }
+.podium-card--silver .podium-card__score-value { color: var(--silver); }
+.podium-card--bronze .podium-card__score-value { color: var(--bronze); }
+
+.podium-card__score-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.podium-card__meta {
+  display: flex;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: var(--sp-sm);
+}

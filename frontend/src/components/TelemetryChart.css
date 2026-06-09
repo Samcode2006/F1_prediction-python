@@ -1,0 +1,43 @@
+.telemetry-chart { position: relative; }
+.chart-empty { color: var(--text-muted); font-size: 0.875rem; text-align: center; padding: var(--sp-xl); }
+
+.chart-tooltip {
+  background: var(--bg-card);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--r-md);
+  padding: var(--sp-md);
+  font-size: 0.8rem;
+  min-width: 160px;
+  box-shadow: var(--shadow-card);
+}
+.chart-tooltip__driver { font-family: var(--font-head); font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+.chart-tooltip__name   { color: var(--text-muted); font-size: 0.75rem; margin-bottom: var(--sp-sm); }
+.chart-tooltip__stat   { color: var(--text-secondary); line-height: 1.7; }
+.chart-tooltip__stat strong { color: var(--text-primary); font-family: var(--font-mono); }
+.chart-tooltip__tyres  { display: flex; gap: 6px; flex-wrap: wrap; margin-top: var(--sp-sm); }
+
+.telemetry-fl {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-top: var(--sp-md);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+.telemetry-fl strong { color: var(--text-primary); }
+
+/* Tyre compound badges */
+.tyre-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--r-full);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.tyre-badge--soft   { background: rgba(232,0,45,0.08);   color: #d10022; border: 1px solid rgba(232,0,45,0.18); }
+.tyre-badge--medium { background: rgba(245,197,24,0.1);  color: #9c7100; border: 1px solid rgba(245,197,24,0.2); }
+.tyre-badge--hard   { background: rgba(0,0,0,0.04);      color: var(--text-secondary); border: 1px solid var(--border); }
+.tyre-badge--inter  { background: rgba(34,153,113,0.08); color: #116f4d; border: 1px solid rgba(34,153,113,0.18); }
+.tyre-badge--wet    { background: rgba(54,113,198,0.08); color: #1e51b3; border: 1px solid rgba(54,113,198,0.18); }
