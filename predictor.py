@@ -12,12 +12,12 @@ import pickle
 # Higher = stronger constructor
 # ──────────────────────────────────────────────
 TEAM_STRENGTH = {
-    "Red Bull Racing":  10,
-    "McLaren":           9,
-    "Ferrari":           8,
-    "Mercedes":          7,
-    "Aston Martin":      5,
-    "Alpine":            4,
+    "Red Bull Racing":  8,
+    "McLaren":           7,
+    "Ferrari":           9,
+    "Mercedes":          10,
+    "Aston Martin":      4,
+    "Alpine":            5,
     "Williams":          4,
     "Haas F1 Team":      3,
     "Racing Bulls":      3,   # was "RB" — updated to match FastF1 naming
