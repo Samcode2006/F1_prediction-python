@@ -69,38 +69,9 @@ export default function Dashboard() {
 
       <div className="divider" />
 
-      {/* Stats strip */}
-      <section>
-        <h2 className="section-title">📊 Quick Stats</h2>
-        <div className="grid-4">
-          <StatCard
-            icon="👥"
-            label="Total Drivers"
-            value={prediction.totalDrivers}
-          />
-          <StatCard
-            icon="🏗️"
-            label="Constructors"
-            value={constructors?.length ?? '—'}
-          />
-          <StatCard
-            icon="⭐"
-            label="Top Score"
-            value={`${fullField[0]?.score ?? '—'} pts`}
-          />
-          <StatCard
-            icon="📈"
-            label="Points Range"
-            value={`${fullField.at(-1)?.score ?? 0}–${fullField[0]?.score ?? 0}`}
-          />
-        </div>
-      </section>
-
-      <div className="divider" />
-
       {/* Constructor standings */}
       <section>
-        <h2 className="section-title">🏗️ Constructor Standings</h2>
+        <h2 className="section-title">Constructor Standings</h2>
         <div className="card">
           <table className="f1-table">
             <thead>
