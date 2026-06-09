@@ -1,0 +1,194 @@
+.race-detail {
+  padding-bottom: var(--sp-3xl);
+}
+
+.detail-back {
+  padding-top: var(--sp-lg);
+}
+
+/* Circuit map + Weather: side-by-side hero */
+.detail-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-xl);
+  margin-bottom: var(--sp-xl);
+  align-items: start;
+}
+
+@media (max-width: 750px) {
+  .detail-hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detail-header {
+  padding: var(--sp-xl) 0 var(--sp-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.detail-year {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.detail-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+}
+
+.detail-weather {
+  margin-bottom: var(--sp-xl);
+}
+
+.detail-section-title {
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: var(--sp-md);
+}
+
+.detail-section-sub {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-lg);
+}
+
+/* Tabs */
+.detail-tabs {
+  display: flex;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-lg);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+}
+
+.detail-tab {
+  padding: 10px 18px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  transition: all var(--t-fast);
+  position: relative;
+  bottom: -1px;
+  border: 1px solid transparent;
+}
+
+.detail-tab:hover {
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.detail-tab--active {
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border-color: var(--border) var(--border) var(--bg-card);
+}
+
+/* Lap table */
+.lap-table-wrap {
+  margin-top: var(--sp-xl);
+  overflow-x: auto;
+}
+
+.lap-table {}
+
+.lap-pos {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.gold-text {
+  color: var(--gold) !important;
+  font-weight: 700;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.tyre-list {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+/* Driver grid */
+.driver-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--sp-md);
+  margin-top: var(--sp-md);
+}
+
+.driver-info-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-md);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  transition: border-color var(--t-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.driver-info-card:hover {
+  border-color: var(--border-hover);
+}
+
+.driver-info-card__colour {
+  width: 4px;
+  align-self: stretch;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.driver-info-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.driver-info-card__abbr {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.driver-info-card__name {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.driver-info-card__team {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.driver-info-card__num {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.loading-text {
+  text-align: center;
+  padding: var(--sp-3xl);
+  color: var(--text-muted);
+}
+
+.error-text {
+  text-align: center;
+  padding: var(--sp-3xl);
+  color: #d10022;
+}
