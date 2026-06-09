@@ -27,8 +27,12 @@
       "dest": "frontend/dist/favicon.jpeg"
     },
     {
+      "src": "/vite.svg",
+      "dest": "frontend/dist/vite.svg"
+    },
+    {
       "src": "/(.*)",
-      "dest": "frontend/dist/$1"
+      "dest": "frontend/dist/index.html"
     }
   ]
 }
