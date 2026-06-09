@@ -12,17 +12,17 @@ import pickle
 # Higher = stronger constructor
 # ──────────────────────────────────────────────
 TEAM_STRENGTH = {
-    "Red Bull Racing":  8,
-    "McLaren":           7,
-    "Ferrari":           9,
     "Mercedes":          10,
-    "Aston Martin":      4,
-    "Alpine":            5,
-    "Williams":          4,
-    "Haas F1 Team":      3,
-    "Racing Bulls":      3,   # was "RB" — updated to match FastF1 naming
-    "Audi":              3,   # was "Kick Sauber" — rebranded for 2026
-    "Cadillac":          2,   # new 2026 entry
+    "Ferrari":           9,
+    "McLaren":           8,
+    "Red Bull Racing":   7,
+    "Alpine":            6,
+    "Racing Bulls":      5,
+    "Haas F1 Team":      4,
+    "Williams":          3,
+    "Audi":              2,
+    "Aston Martin":      1,
+    "Cadillac":          1,
 }
 
 # Tyre compound speed ranking (lower number = faster)
