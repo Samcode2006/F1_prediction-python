@@ -17,6 +17,7 @@ Endpoints:
     GET /api/health              - health check
 """
 
+import datetime
 import os
 import sys
 
@@ -114,6 +115,9 @@ def predict():
         "podium": results[:3],
         "fullField": results,
         "totalDrivers": len(results),
+        "updatedAt": datetime.datetime.fromtimestamp(
+            os.path.getmtime(DRIVERS_CSV), tz=datetime.timezone.utc
+        ).isoformat(),
     }
 
 

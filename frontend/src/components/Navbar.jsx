@@ -3,9 +3,9 @@ import logo from '../assets/Formula_1_Logo_4.svg'
 import './Navbar.css'
 
 const links = [
-  { to: '/',        label: 'Dashboard' },
+  { to: '/', label: 'Dashboard' },
   { to: '/predict', label: 'Predict' },
-  { to: '/races',   label: 'Race History' },
+  { to: '/races', label: 'Race History' },
   { to: '/compare', label: 'Compare' },
 ]
 
@@ -34,10 +34,6 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="navbar-badge">
-          <span className="pulse" />
-          Live Data
-        </div>
       </div>
     </nav>
   )

@@ -18,9 +18,12 @@ export default function Predict() {
   }, [])
 
   if (loading) return <div className="page-wrapper"><p className="loading-text">Loading predictions…</p></div>
-  if (error)   return <div className="page-wrapper"><p className="error-text">Error: {error}</p></div>
+  if (error) return <div className="page-wrapper"><p className="error-text">Error: {error}</p></div>
 
-  const { fullField } = data
+  const { fullField, updatedAt } = data
+  const updatedLabel = updatedAt
+    ? new Date(updatedAt).toLocaleString()
+    : 'Unknown'
 
   return (
     <div className="page-wrapper predict-page">
@@ -28,6 +31,9 @@ export default function Predict() {
         <h1>Full Driver Rankings</h1>
         <p className="predict-sub">
           Prediction score from 9 weighted factors. Click a driver to see the breakdown.
+        </p>
+        <p className="predict-updated">
+          Updated {updatedLabel}. Refresh data with <span className="mono">python fetch_data.py</span> after a completed race.
         </p>
       </header>
 
@@ -47,15 +53,15 @@ export default function Predict() {
           <tbody>
             {fullField.map(driver => {
               const isOpen = expanded === driver.driver
-              const pct    = Math.min(100, Math.round((driver.score / MAX_SCORE) * 100))
-              const bd     = driver.breakdown
+              const pct = Math.min(100, Math.round((driver.score / MAX_SCORE) * 100))
+              const bd = driver.breakdown
 
               return (
                 <React.Fragment key={driver.driver}>
                   <tr
                     className={`predict-row ${isOpen ? 'predict-row--open' : ''}`}
                     onClick={() => setExpanded(isOpen ? null : driver.driver)}
-                    id={`driver-row-${driver.driver.toLowerCase().replace(/\s+/g,'-')}`}
+                    id={`driver-row-${driver.driver.toLowerCase().replace(/\s+/g, '-')}`}
                     role="button"
                     tabIndex={0}
                     onKeyDown={e => e.key === 'Enter' && setExpanded(isOpen ? null : driver.driver)}
