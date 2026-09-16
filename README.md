@@ -46,7 +46,7 @@ pip install -r requirements.txt
 
 ### 2. Pre-populate the cache (run once)
 
-Downloads all past race sessions (Qualifying + Race) for 2024–2026:
+Downloads all past race sessions (Qualifying + Race) for 2025–2026:
 
 ```bash
 python bulk_fetch.py

@@ -1,6 +1,6 @@
 """
 bulk_fetch.py
-Pre-populates the FastF1 cache for 2024, 2025, and 2026 seasons.
+Pre-populates the FastF1 cache for the 2025 and 2026 seasons.
 Run this once (or when new races finish) before using app.py or build_dataset.py.
 
 Usage:
@@ -20,7 +20,7 @@ import pandas as pd
 # ── Config ─────────────────────────────────────────────────────────────────────
 CACHE_DIR = "cache"
 LOG_FILE  = "bulk_fetch_errors.log"
-DEFAULT_YEARS = [2024, 2025, 2026]
+DEFAULT_YEARS = [2025, 2026]
 
 os.makedirs(CACHE_DIR, exist_ok=True)
 fastf1.Cache.enable_cache(CACHE_DIR)
