@@ -1,12 +1,13 @@
 import { NavLink } from 'react-router-dom'
 import logo from '../assets/Formula_1_Logo_4.svg'
 import './Navbar.css'
+import { BrainCircuit, GitCompare, History, LayoutDashboard } from 'lucide-react'
 
 const links = [
-  { to: '/', label: 'Dashboard' },
-  { to: '/predict', label: 'Predict' },
-  { to: '/races', label: 'Race History' },
-  { to: '/compare', label: 'Compare' },
+  { to: '/', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/predict', label: 'Predict', icon: BrainCircuit },
+  { to: '/races', label: 'Race History', icon: History },
+  { to: '/compare', label: 'Compare', icon: GitCompare },
 ]
 
 export default function Navbar() {
@@ -19,16 +20,17 @@ export default function Navbar() {
         </NavLink>
 
         <ul className="navbar-links">
-          {links.map(l => (
-            <li key={l.to}>
+          {links.map(({ to, label, icon: Icon }) => (
+            <li key={to}>
               <NavLink
-                to={l.to}
+                to={to}
                 className={({ isActive }) =>
                   'navbar-link' + (isActive ? ' navbar-link--active' : '')
                 }
-                end={l.to === '/'}
+                end={to === '/'}
               >
-                {l.label}
+                <Icon size={16} strokeWidth={2} aria-hidden="true" />
+                <span>{label}</span>
               </NavLink>
             </li>
           ))}

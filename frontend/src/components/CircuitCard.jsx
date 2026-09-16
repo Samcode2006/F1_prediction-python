@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { CarFront } from 'lucide-react'
 import { fetchCircuitImage } from '../circuitImages'
 import './CircuitCard.css'
 
@@ -10,7 +11,7 @@ import './CircuitCard.css'
  *   compact    (bool)   — show a smaller version (for RaceHistory cards)
  */
 export default function CircuitCard({ trackName, compact = false }) {
-  const [info, setInfo]       = useState(null)
+  const [info, setInfo] = useState(null)
   const [loading, setLoading] = useState(true)
   const [imgError, setImgError] = useState(false)
 
@@ -36,7 +37,7 @@ export default function CircuitCard({ trackName, compact = false }) {
   if (!info?.thumbUrl || imgError) {
     return (
       <div className={`circuit-card circuit-card--empty ${compact ? 'circuit-card--compact' : ''}`}>
-        <span className="circuit-card__empty-icon">🏎️</span>
+        <CarFront className="circuit-card__empty-icon" size={32} strokeWidth={1.8} aria-hidden="true" />
         <span className="circuit-card__empty-label">Circuit image unavailable</span>
       </div>
     )

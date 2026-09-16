@@ -51,7 +51,9 @@
 
 /* Links */
 .navbar-links {
-  display: flex;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   list-style: none;
   gap: var(--sp-xs);
   flex: 1;

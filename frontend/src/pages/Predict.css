@@ -89,8 +89,36 @@
   color: var(--text-muted);
 }
 
-.pos-emoji {
-  font-size: 1.2rem;
+.pos-medal {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.pos-medal svg {
+  position: absolute;
+}
+
+.pos-medal span {
+  z-index: 1;
+  font-size: 0.65rem;
+  font-weight: 800;
+  margin-top: 2px;
+}
+
+.pos-medal--1 {
+  color: var(--gold);
+}
+
+.pos-medal--2 {
+  color: var(--silver);
+}
+
+.pos-medal--3 {
+  color: var(--bronze);
 }
 
 .pos-num {

@@ -1,3 +1,4 @@
+import { Zap } from 'lucide-react'
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip,
   ResponsiveContainer, Cell, CartesianGrid
@@ -29,7 +30,7 @@ function fmtSec(sec) {
   if (!sec) return 'N/A'
   const m = Math.floor(sec / 60)
   const s = (sec % 60).toFixed(3)
-  return `${m}:${String(s).padStart(6,'0')}`
+  return `${m}:${String(s).padStart(6, '0')}`
 }
 
 export default function TelemetryChart({ data }) {
@@ -77,7 +78,7 @@ export default function TelemetryChart({ data }) {
       {/* Fastest lap label */}
       {data[0] && (
         <div className="telemetry-fl">
-          <span className="tyre-badge tyre-badge--soft">⚡ Fastest Lap</span>
+          <span className="tyre-badge tyre-badge--soft"><Zap size={13} aria-hidden="true" /> Fastest Lap</span>
           <strong>{data[0].Abbreviation}</strong> — {data[0].FastestLap}
         </div>
       )}

@@ -82,7 +82,10 @@
   letter-spacing: 0.03em;
   transition: color var(--t-fast);
 }
-.circuit-card__wiki-link:hover { color: #ff4060; }
+
+.circuit-card__wiki-link:hover {
+  color: #ff4060;
+}
 
 /* ── Skeleton ───────────────────────────────────────────── */
 .circuit-card__skeleton {
@@ -100,5 +103,12 @@
   padding: var(--sp-2xl);
   min-height: 160px;
 }
-.circuit-card__empty-icon  { font-size: 2rem; }
-.circuit-card__empty-label { font-size: 0.82rem; color: var(--text-muted); }
+
+.circuit-card__empty-icon {
+  color: var(--text-muted);
+}
+
+.circuit-card__empty-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}

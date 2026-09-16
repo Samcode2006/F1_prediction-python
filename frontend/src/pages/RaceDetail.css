@@ -49,6 +49,9 @@
   font-size: 1.05rem;
   font-weight: 700;
   margin-bottom: var(--sp-md);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
 }
 
 .detail-section-sub {

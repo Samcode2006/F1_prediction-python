@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { Clock3, CloudSun, Flag, Map } from 'lucide-react'
 import { api } from '../api'
 import WeatherPanel from '../components/WeatherPanel'
 import TelemetryChart from '../components/TelemetryChart'
@@ -50,13 +51,13 @@ export default function RaceDetail() {
       {/* Circuit map + Weather — side by side */}
       <div className="detail-hero-grid">
         <div>
-          <h3 className="detail-section-title">🗺️ Circuit Map</h3>
+          <h3 className="detail-section-title"><Map size={18} aria-hidden="true" /> Circuit Map</h3>
           <CircuitCard trackName={trackName} />
         </div>
 
         {weather && (
           <div>
-            <h3 className="detail-section-title">🌤️ Race Day Weather</h3>
+            <h3 className="detail-section-title"><CloudSun size={18} aria-hidden="true" /> Race Day Weather</h3>
             <div className="card detail-weather">
               <WeatherPanel weather={weather} />
             </div>
@@ -67,16 +68,16 @@ export default function RaceDetail() {
       {/* Tabs */}
       <div className="detail-tabs">
         {[
-          { id: 'lap', label: '⏱️ Lap Times' },
-          { id: 'drivers', label: '👤 Drivers' },
-        ].map(tab => (
+          { id: 'lap', label: 'Lap Times', icon: Clock3 },
+          { id: 'drivers', label: 'Drivers', icon: Flag },
+        ].map(({ id, label, icon: Icon }) => (
           <button
-            key={tab.id}
-            id={`tab-${tab.id}`}
-            className={`detail-tab ${activeTab === tab.id ? 'detail-tab--active' : ''}`}
-            onClick={() => setActiveTab(tab.id)}
+            key={id}
+            id={`tab-${id}`}
+            className={`detail-tab ${activeTab === id ? 'detail-tab--active' : ''}`}
+            onClick={() => setActiveTab(id)}
           >
-            {tab.label}
+            <Icon size={16} aria-hidden="true" /> {label}
           </button>
         ))}
       </div>

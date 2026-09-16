@@ -1,3 +1,4 @@
+import { AlertTriangle, CloudRain, Sun } from 'lucide-react'
 import './WeatherPanel.css'
 
 const MAX_TEMP = 50
@@ -25,7 +26,7 @@ export default function WeatherPanel({ weather }) {
   if (!weather) {
     return (
       <div className="weather-panel weather-panel--empty">
-        <span>⚠️</span> Weather data not available
+        <AlertTriangle size={18} aria-hidden="true" /> Weather data not available
       </div>
     )
   }
@@ -34,13 +35,13 @@ export default function WeatherPanel({ weather }) {
     <div className="weather-panel">
       <div className="weather-conditions">
         <div className={`weather-condition ${weather.rainfall ? 'wet' : 'dry'}`}>
-          <span className="weather-icon">{weather.rainfall ? '🌧️' : '☀️'}</span>
+          <span className="weather-icon">{weather.rainfall ? <CloudRain size={19} /> : <Sun size={19} />}</span>
           <span>{weather.rainfall ? 'Wet Race' : 'Dry Race'}</span>
         </div>
       </div>
 
       <div className="weather-stats">
-        <TempBar value={weather.air_temp}   label="Air Temp" />
+        <TempBar value={weather.air_temp} label="Air Temp" />
         <TempBar value={weather.track_temp} label="Track Temp" />
 
         {weather.humidity !== 'N/A' && (

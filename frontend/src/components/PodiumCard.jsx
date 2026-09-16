@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
+import { Flag, Medal } from 'lucide-react'
 import './PodiumCard.css'
 
-const MEDALS  = ['🥇', '🥈', '🥉']
-const LABELS  = ['Winner', '2nd Place', '3rd Place']
+const LABELS = ['Winner', '2nd Place', '3rd Place']
 const ACCENTS = ['gold', 'silver', 'bronze']
 
 export default function PodiumCard({ driver, position }) {
@@ -24,7 +24,10 @@ export default function PodiumCard({ driver, position }) {
       className={`podium-card podium-card--${accent} ${visible ? 'podium-card--visible' : ''}`}
       aria-label={`${LABELS[idx]}: ${driver.driver}`}
     >
-      <div className="podium-card__medal">{MEDALS[idx]}</div>
+      <div className="podium-card__medal" aria-label={LABELS[idx]}>
+        <Medal size={38} strokeWidth={2} />
+        <span>{position}</span>
+      </div>
       <div className="podium-card__label">{LABELS[idx]}</div>
 
       <div className="podium-card__team-bar" style={{ '--team-color': driver.teamColour }} />
@@ -38,7 +41,7 @@ export default function PodiumCard({ driver, position }) {
       </div>
 
       <div className="podium-card__meta">
-        <span>P{driver.qualifying} quali</span>
+        <span><Flag size={13} strokeWidth={2} aria-hidden="true" /> P{driver.qualifying} quali</span>
         <span>·</span>
         <span>P{driver.previousFinish} prev</span>
       </div>

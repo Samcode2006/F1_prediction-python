@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Activity, AlertTriangle, ArrowRight, BarChart3, Trophy } from 'lucide-react'
 import { api } from '../api'
 import PodiumCard from '../components/PodiumCard'
 import WeatherPanel from '../components/WeatherPanel'
@@ -33,7 +34,7 @@ export default function Dashboard() {
       <section className="dashboard-hero-container">
         <div className="dashboard-hero">
           <div className="dashboard-hero__eyebrow">
-            <span className="badge badge-red">🏎️ Prediction Engine</span>
+            <span className="badge badge-red"><Activity size={14} aria-hidden="true" /> Prediction Engine</span>
             <span className="badge badge-gray">Rule-based Scoring v2</span>
           </div>
           <h1 className="display dashboard-hero__title">
@@ -45,7 +46,7 @@ export default function Dashboard() {
             tyre strategy and championship standings.
           </p>
           <Link to="/predict" className="btn btn-primary">
-            Full Driver Rankings →
+            Full Driver Rankings <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </div>
         <div className="dashboard-hero-banner">
@@ -55,7 +56,7 @@ export default function Dashboard() {
 
       {/* Podium */}
       <section>
-        <h2 className="section-title">🏆 Predicted Podium</h2>
+        <h2 className="section-title"><Trophy size={22} strokeWidth={2.2} aria-hidden="true" /> Predicted Podium</h2>
         <div className="podium-grid">
           {podium.map(driver => (
             <PodiumCard
@@ -71,7 +72,7 @@ export default function Dashboard() {
 
       {/* Constructor standings */}
       <section>
-        <h2 className="section-title">Constructor Standings</h2>
+        <h2 className="section-title"><BarChart3 size={22} strokeWidth={2.2} aria-hidden="true" /> Constructor Standings</h2>
         <div className="card">
           <table className="f1-table">
             <thead>
@@ -87,7 +88,7 @@ export default function Dashboard() {
               {constructors?.map((t, i) => (
                 <tr key={t.Team}>
                   <td>
-                    <span className={`pos-badge pos-badge--${i < 3 ? ['gold','silver','bronze'][i] : 'normal'}`}>
+                    <span className={`pos-badge pos-badge--${i < 3 ? ['gold', 'silver', 'bronze'][i] : 'normal'}`}>
                       {i + 1}
                     </span>
                   </td>
@@ -141,7 +142,7 @@ function ErrorState({ message }) {
   return (
     <div className="page-wrapper">
       <div className="error-state card">
-        <span className="error-state__icon">⚠️</span>
+        <AlertTriangle className="error-state__icon" size={42} strokeWidth={1.8} aria-hidden="true" />
         <h2>Could not load predictions</h2>
         <p>{message}</p>
         <p className="error-state__hint">

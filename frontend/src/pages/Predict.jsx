@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Medal } from 'lucide-react'
 import { api } from '../api'
 import './Predict.css'
 
@@ -131,8 +132,7 @@ export default function Predict() {
 }
 
 function PosBadge({ pos }) {
-  const map = { 1: '🥇', 2: '🥈', 3: '🥉' }
-  if (map[pos]) return <span className="pos-emoji">{map[pos]}</span>
+  if (pos <= 3) return <span className={`pos-medal pos-medal--${pos}`}><Medal size={20} aria-hidden="true" /><span>{pos}</span></span>
   return (
     <span className="pos-num">P{pos}</span>
   )
