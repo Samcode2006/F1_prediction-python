@@ -21,10 +21,7 @@ export default function Predict() {
   if (loading) return <div className="page-wrapper"><p className="loading-text">Loading predictions…</p></div>
   if (error) return <div className="page-wrapper"><p className="error-text">Error: {error}</p></div>
 
-  const { fullField, updatedAt } = data
-  const updatedLabel = updatedAt
-    ? new Date(updatedAt).toLocaleString()
-    : 'Unknown'
+  const { fullField } = data
 
   return (
     <div className="page-wrapper predict-page">
@@ -32,9 +29,6 @@ export default function Predict() {
         <h1>Full Driver Rankings</h1>
         <p className="predict-sub">
           Prediction score from 9 weighted factors. Click a driver to see the breakdown.
-        </p>
-        <p className="predict-updated">
-          Updated {updatedLabel}. Refresh data with <span className="mono">python fetch_data.py</span> after a completed race.
         </p>
       </header>
 

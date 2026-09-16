@@ -14,12 +14,6 @@
   margin-top: var(--sp-sm);
 }
 
-.predict-updated {
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  margin-top: var(--sp-sm);
-}
-
 .predict-card {
   padding: 0;
   overflow: hidden;
