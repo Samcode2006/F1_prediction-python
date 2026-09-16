@@ -24,7 +24,7 @@ def get_latest_race(season):
     # Use UTC-aware timestamp; compare to EventDate + 1 day so we don't
     # accidentally include a race that is still happening today.
     now = pd.Timestamp(datetime.datetime.now(tz=datetime.timezone.utc))
-    event_end = schedule['EventDate'] + pd.Timedelta(days=1)
+    event_end = pd.to_datetime(schedule['EventDate'], utc=True) + pd.Timedelta(days=1)
     # Exclude Pre-Season testing (RoundNumber == 0)
     past_races = schedule[(event_end < now) & (schedule['RoundNumber'] > 0)]
     
