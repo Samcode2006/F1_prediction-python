@@ -27,7 +27,7 @@ export default function DriverCompare() {
   }, [])
 
   if (loading) return <div className="page-wrapper"><p className="loading-text">Loading…</p></div>
-  if (error)   return <div className="page-wrapper"><p className="error-text">Error: {error}</p></div>
+  if (error) return <div className="page-wrapper"><p className="error-text">Error: {error}</p></div>
 
   const allDrivers = data.fullField
   const dA = allDrivers.find(d => d.driver === driverA)
@@ -89,7 +89,7 @@ export default function DriverCompare() {
             <h3 className="detail-section-title">Factor Comparison (Radar)</h3>
             <ResponsiveContainer width="100%" height={380}>
               <RadarChart data={radarData} margin={{ top: 20, right: 40, bottom: 20, left: 40 }}>
-                <PolarGrid stroke="rgba(0,0,0,0.08)" />
+                <PolarGrid stroke="var(--chart-grid)" />
                 <PolarAngleAxis
                   dataKey="factor"
                   tick={{ fill: 'var(--text-muted)', fontSize: 11 }}
