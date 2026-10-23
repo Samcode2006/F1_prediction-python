@@ -138,3 +138,11 @@ python main.py
 ```bash
 python -m pytest tests/ -v
 ```
+
+---
+
+## 👥 Contributors
+
+- **[Samarth S](https://github.com/Samcode2006)** — Creator & Lead Maintainer
+- **[Sathvik](https://github.com/Sathvik18M)** — Contributor
+
