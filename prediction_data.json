@@ -1,0 +1,169 @@
+{
+  "drivers": [
+    {
+      "Driver": "Andrea Kimi Antonelli",
+      "Team": "Mercedes",
+      "Qualifying": 1,
+      "PreviousFinish": 1,
+      "ChampPosition": 1
+    },
+    {
+      "Driver": "Charles Leclerc",
+      "Team": "Ferrari",
+      "Qualifying": 4,
+      "PreviousFinish": 2,
+      "ChampPosition": 5
+    },
+    {
+      "Driver": "Max Verstappen",
+      "Team": "Red Bull Racing",
+      "Qualifying": 2,
+      "PreviousFinish": 3,
+      "ChampPosition": 4
+    },
+    {
+      "Driver": "Lewis Hamilton",
+      "Team": "Ferrari",
+      "Qualifying": 5,
+      "PreviousFinish": 4,
+      "ChampPosition": 3
+    },
+    {
+      "Driver": "Lando Norris",
+      "Team": "McLaren",
+      "Qualifying": 8,
+      "PreviousFinish": 5,
+      "ChampPosition": 6
+    },
+    {
+      "Driver": "Isack Hadjar",
+      "Team": "Red Bull Racing",
+      "Qualifying": 3,
+      "PreviousFinish": 6,
+      "ChampPosition": 8
+    },
+    {
+      "Driver": "Oscar Piastri",
+      "Team": "McLaren",
+      "Qualifying": 7,
+      "PreviousFinish": 7,
+      "ChampPosition": 7
+    },
+    {
+      "Driver": "George Russell",
+      "Team": "Mercedes",
+      "Qualifying": 6,
+      "PreviousFinish": 8,
+      "ChampPosition": 2
+    },
+    {
+      "Driver": "Liam Lawson",
+      "Team": "Racing Bulls",
+      "Qualifying": 9,
+      "PreviousFinish": 9,
+      "ChampPosition": 9
+    },
+    {
+      "Driver": "Pierre Gasly",
+      "Team": "Alpine",
+      "Qualifying": 10,
+      "PreviousFinish": 10,
+      "ChampPosition": 10
+    },
+    {
+      "Driver": "Nico H\u00fclkenberg",
+      "Team": "Audi",
+      "Qualifying": 11,
+      "PreviousFinish": 11,
+      "ChampPosition": 14
+    },
+    {
+      "Driver": "Arvid Lindblad",
+      "Team": "Racing Bulls",
+      "Qualifying": 14,
+      "PreviousFinish": 12,
+      "ChampPosition": 11
+    },
+    {
+      "Driver": "Gabriel Bortoleto",
+      "Team": "Audi",
+      "Qualifying": 21,
+      "PreviousFinish": 13,
+      "ChampPosition": 15
+    },
+    {
+      "Driver": "Esteban Ocon",
+      "Team": "Haas F1 Team",
+      "Qualifying": 15,
+      "PreviousFinish": 14,
+      "ChampPosition": 16
+    },
+    {
+      "Driver": "Lance Stroll",
+      "Team": "Aston Martin",
+      "Qualifying": 22,
+      "PreviousFinish": 15,
+      "ChampPosition": 21
+    },
+    {
+      "Driver": "Fernando Alonso",
+      "Team": "Aston Martin",
+      "Qualifying": 12,
+      "PreviousFinish": 16,
+      "ChampPosition": 17
+    },
+    {
+      "Driver": "Alexander Albon",
+      "Team": "Williams",
+      "Qualifying": 17,
+      "PreviousFinish": 17,
+      "ChampPosition": 19
+    },
+    {
+      "Driver": "Carlos Sainz",
+      "Team": "Williams",
+      "Qualifying": 16,
+      "PreviousFinish": 18,
+      "ChampPosition": 18
+    },
+    {
+      "Driver": "Sergio P\u00e9rez",
+      "Team": "Cadillac",
+      "Qualifying": 18,
+      "PreviousFinish": 19,
+      "ChampPosition": 23
+    },
+    {
+      "Driver": "Valtteri Bottas",
+      "Team": "Cadillac",
+      "Qualifying": 19,
+      "PreviousFinish": 20,
+      "ChampPosition": 22
+    },
+    {
+      "Driver": "Franco Colapinto",
+      "Team": "Alpine",
+      "Qualifying": 20,
+      "PreviousFinish": 21,
+      "ChampPosition": 12
+    },
+    {
+      "Driver": "Oliver Bearman",
+      "Team": "Haas F1 Team",
+      "Qualifying": 13,
+      "PreviousFinish": 22,
+      "ChampPosition": 13
+    }
+  ],
+  "metadata": {
+    "source": "Jolpica F1",
+    "season": "2026",
+    "sourceRace": "United States Grand Prix",
+    "sourceDate": "2026-10-25",
+    "targetRace": "Mexico City Grand Prix",
+    "targetDate": "2026-11-01",
+    "qualifyingBasis": "Previous race grid (provisional)",
+    "updatedAt": "2026-10-26T08:19:01.118148+00:00",
+    "note": "Rule-based ranking, not calibrated win odds. Team ratings are manual; tyres and weather are neutral. Target qualifying is unavailable; the previous grid is a proxy."
+  }
+}

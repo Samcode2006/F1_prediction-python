@@ -1,9 +1,9 @@
 /* api.js — Centralised fetch helpers for the FastAPI backend */
 
-const BASE = import.meta.env.DEV ? 'http://localhost:8000/api' : '/api'
+const BASE = '/api'
 
-async function get(path) {
-  const res = await fetch(`${BASE}${path}`)
+async function get(path, method = 'GET') {
+  const res = await fetch(`${BASE}${path}`, { method })
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: res.statusText }))
     throw new Error(err.detail || `HTTP ${res.status}`)
@@ -12,6 +12,9 @@ async function get(path) {
 }
 
 export const api = {
+  sessions:    ()                  => get('/sessions'),
+  timing:      key                 => get(`/sessions/${key}/timing`),
+  refresh:     ()                  => get('/data/refresh', 'POST'),
   predict:     ()                  => get('/predict'),
   constructors:()                  => get('/constructors'),
   races:       ()                  => get('/races'),
