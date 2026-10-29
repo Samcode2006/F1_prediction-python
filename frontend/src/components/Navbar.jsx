@@ -5,10 +5,12 @@ import logo from '../assets/Formula_1_Logo_4.svg'
 import './Navbar.css'
 
 const links = [
-  { to: '/', label: 'Dashboard' },
+  { to: '/dashboard', label: 'Dashboard' },
   { to: '/predict', label: 'Predict' },
+  { to: '/live', label: 'Session Centre' },
   { to: '/races', label: 'Race History' },
   { to: '/compare', label: 'Compare' },
+  { to: '/game', label: 'Race Game' },
 ]
 
 export default function Navbar() {

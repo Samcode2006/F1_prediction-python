@@ -56,13 +56,29 @@ python bulk_fetch.py --years 2026
 
 Errors are logged to `bulk_fetch_errors.log`.
 
-### 3. Fetch latest race data
+### 3. Fetch latest prediction data
 
 ```bash
-python fetch_data.py
+python live_data.py
 ```
 
-This generates `drivers.csv` from the most recently completed race.
+This saves `prediction_data.json` using published Jolpica race results and championship standings. Refreshes are cached for five minutes and replace the saved snapshot only after all requests succeed. The legacy `fetch_data.py` CSV remains available for the CLI and Streamlit app.
+
+The app opens directly to `/dashboard` from `/`. The prediction banner shows only the next race and date. Target qualifying is used when published; otherwise the previous race grid is a provisional proxy, recorded in API metadata. Scores are heuristic rankings, not calibrated probabilities. Team strength remains manually rated, and weather and tyres default to neutral.
+
+### Race Game
+
+`/game` offers a two-lap, six-car 2D arcade race. Select any of the 22 drivers from the 2026 United States GP roster and Monza, Silverstone or Bahrain. Bundled real circuit geometry is credited to Tomislav Bacinger under MIT (see `frontend/src/game/CIRCUIT-LICENSE.txt`); the hand-drawn top-down cars use the roster's team colours and numbers. Handling and scenery are stylized, not a simulation or exact replica of current liveries. Data sources: [circuit geometry](https://github.com/bacinger/f1-circuits), [OpenF1](https://openf1.org/).
+
+Controls: W/up for throttle, S/down for brake, A/D or left/right to move across the track, Space for boost, P to pause. Touch buttons support simultaneous inputs. Cornering follows the circuit; excessive speed causes drift and grass slows the car. Leaving the tab pauses the race. Restart or return to the garage at any time. Game assets are bundled and do not need the backend. Run engine checks with `node --test frontend/src/game/engine.test.mjs`.
+
+### Session Centre access
+
+`/live` lists the current season's race weekends, practice, qualifying, sprint and Grand Prix sessions from OpenF1. Completed results are free. Timing checks run every 30 seconds with server-side request caching; upcoming, cancelled, unavailable and stale feeds are distinguished from live timing. This is a timing table, not video streaming.
+
+Live access requires an OpenF1 subscription and a valid OAuth token in the server environment variable `OPENF1_ACCESS_TOKEN`. Obtain it using [OpenF1's authentication instructions](https://openf1.org/auth.html), and renew it when it expires. Never put it in frontend code or commit it. Without a token, the session page shows the schedule and completed results; OpenF1 restricts data until 30 minutes after a session ends. Live feed integration is polling-based, not a WebSocket stream.
+
+On Vercel, refreshed snapshots use temporary storage and may reset on a cold start; the bundled snapshot is the fallback. For durable hosting, set `F1_SNAPSHOT_PATH` to a writable persistent file path.
 
 ### 4. Start the backend API
 

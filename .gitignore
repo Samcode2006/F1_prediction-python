@@ -1,5 +1,13 @@
 # Python environments
 .venv/
+.test-deps/
+.hypothesis/
+.pytest-local/
+.pytest-local-full/
+.pytest-local-final/
+.pytest_cache/
+frontend/node_modules/
+frontend/dist/
 env/
 venv/
 ENV/

@@ -26,6 +26,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from live_data import read_snapshot, refresh, ROOT
+import session_timing
 
 from predictor import (
     TEAM_STRENGTH,
@@ -56,11 +58,42 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-CACHE_DIR   = "cache"
-DRIVERS_CSV = "drivers.csv"
+CACHE_DIR   = str(ROOT / "cache")
+DRIVERS_CSV = str(ROOT / "drivers.csv")
+
+
+def _drivers():
+    snapshot = read_snapshot()
+    return snapshot['drivers'] if snapshot else load_drivers(DRIVERS_CSV)
+
+
+@app.post('/api/data/refresh')
+def refresh_data():
+    try:
+        refresh()
+    except Exception as exc:
+        raise HTTPException(status_code=503, detail='Could not refresh published data. Saved predictions are unchanged. Try again later.') from exc
+    return predict()
 
 
 # ── Helper ─────────────────────────────────────────────────────────────────────
+
+@app.get('/api/sessions')
+def session_schedule():
+    try:
+        return {'sessions': session_timing.sessions()}
+    except Exception as exc:
+        raise HTTPException(status_code=503, detail='Session schedule is temporarily unavailable. Please retry.') from exc
+
+
+@app.get('/api/sessions/{session_key}/timing')
+def session_scores(session_key: int):
+    try:
+        return session_timing.timing(session_key)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail='Session not found.') from exc
+    except Exception as exc:
+        raise HTTPException(status_code=503, detail='Timing feed is temporarily unavailable. Retrying automatically.') from exc
 
 def _resolve_race(year: str, round_index: int) -> dict | None:
     """Find a race in the cache by year and 1-based round index."""
@@ -84,13 +117,13 @@ def predict():
     Returns ranked driver predictions for the next race based on drivers.csv.
     Response includes full breakdown and podium chance per driver.
     """
-    if not os.path.isfile(DRIVERS_CSV):
+    if not read_snapshot() and not os.path.isfile(DRIVERS_CSV):
         raise HTTPException(
             status_code=404,
             detail="drivers.csv not found. Run fetch_data.py first.",
         )
 
-    drivers = load_drivers(DRIVERS_CSV)
+    drivers = _drivers()
     if not drivers:
         raise HTTPException(status_code=422, detail="drivers.csv is empty.")
 
@@ -111,11 +144,14 @@ def predict():
             "breakdown":      breakdown,
         })
 
+    snapshot = read_snapshot()
+    metadata = snapshot['metadata'] if snapshot else {'source': 'Legacy CSV', 'note': 'Source race is unknown. Refresh data before relying on these provisional rankings.', 'qualifyingBasis': 'Unverified CSV'}
     return {
+        "metadata": metadata,
         "podium": results[:3],
         "fullField": results,
         "totalDrivers": len(results),
-        "updatedAt": datetime.datetime.fromtimestamp(
+        "updatedAt": metadata.get('updatedAt') or datetime.datetime.fromtimestamp(
             os.path.getmtime(DRIVERS_CSV), tz=datetime.timezone.utc
         ).isoformat(),
     }
@@ -124,10 +160,10 @@ def predict():
 @app.get("/api/constructors")
 def constructors():
     """Returns constructor standings derived from the current predictions."""
-    if not os.path.isfile(DRIVERS_CSV):
+    if not read_snapshot() and not os.path.isfile(DRIVERS_CSV):
         raise HTTPException(status_code=404, detail="drivers.csv not found.")
 
-    drivers = load_drivers(DRIVERS_CSV)
+    drivers = _drivers()
     ranked  = predict_winner(drivers)
     standings = calculate_constructor_standings(ranked)
     return {"standings": standings}

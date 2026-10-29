@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Medal } from 'lucide-react'
 import { api } from '../api'
 import './Predict.css'
+import DataStatus from '../components/DataStatus'
 
 const MAX_SCORE = 40  // max possible score from predictor
 
@@ -28,11 +29,12 @@ export default function Predict() {
       <header className="predict-header">
         <h1>Full Driver Rankings</h1>
         <p className="predict-sub">
-          Prediction score from 9 weighted factors. Click a driver to see the breakdown.
+          Explore the predicted finishing order.
         </p>
       </header>
 
-      <div className="card predict-card">
+      <DataStatus data={data} />
+      <div className="card predict-card" style={{ overflowX: 'auto' }}>
         <table className="f1-table">
           <thead>
             <tr>
@@ -42,13 +44,13 @@ export default function Predict() {
               <th>Quali</th>
               <th>Prev</th>
               <th>Score</th>
-              <th>Win %</th>
+              <th>Score index</th>
             </tr>
           </thead>
           <tbody>
             {fullField.map(driver => {
               const isOpen = expanded === driver.driver
-              const pct = Math.min(100, Math.round((driver.score / MAX_SCORE) * 100))
+              const pct = Math.max(0, Math.min(100, Math.round((driver.score / MAX_SCORE) * 100)))
               const bd = driver.breakdown
 
               return (

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Activity, AlertTriangle, ArrowRight, BarChart3, Trophy } from 'lucide-react'
 import { api } from '../api'
 import PodiumCard from '../components/PodiumCard'
-import WeatherPanel from '../components/WeatherPanel'
+import DataStatus from '../components/DataStatus'
 import heroLogo from '../assets/Formula_1_Logo_5.png'
 import './Dashboard.css'
 
@@ -26,7 +26,7 @@ export default function Dashboard() {
   if (loading) return <LoadingState />
   if (error) return <ErrorState message={error} />
 
-  const { podium, fullField } = prediction
+  const { podium } = prediction
 
   return (
     <div className="page-wrapper dashboard">
@@ -54,6 +54,8 @@ export default function Dashboard() {
         </div>
       </section>
 
+      <DataStatus data={prediction} />
+      <Link to="/live" className="btn btn-primary" style={{ marginBottom: 24 }}>Session centre · Practice, qualifying & race <ArrowRight size={16} /></Link>
       {/* Podium */}
       <section>
         <h2 className="section-title"><Trophy size={22} strokeWidth={2.2} aria-hidden="true" /> Predicted Podium</h2>
@@ -72,7 +74,7 @@ export default function Dashboard() {
 
       {/* Constructor standings */}
       <section>
-        <h2 className="section-title"><BarChart3 size={22} strokeWidth={2.2} aria-hidden="true" /> Constructor Standings</h2>
+        <h2 className="section-title"><BarChart3 size={22} strokeWidth={2.2} aria-hidden="true" /> Constructor Prediction Scores</h2>
         <div className="card">
           <table className="f1-table">
             <thead>
@@ -112,16 +114,6 @@ export default function Dashboard() {
           </table>
         </div>
       </section>
-    </div>
-  )
-}
-
-function StatCard({ icon, label, value }) {
-  return (
-    <div className="card stat-card">
-      <span className="stat-card__icon">{icon}</span>
-      <span className="stat-card__value mono">{value}</span>
-      <span className="stat-card__label">{label}</span>
     </div>
   )
 }
